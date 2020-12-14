@@ -7,6 +7,9 @@
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
+  "bin": {
+    "indihomhom": "./index.js"
+  },
   "keywords": [],
   "author": "aryuuu",
   "license": "ISC",

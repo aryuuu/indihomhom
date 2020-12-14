@@ -1,35 +1,24 @@
-const readline = require('readline');
+const fs = require('fs');
+
 
 const logger = (err, res) => {
-  res.statuses.forEach(status => {
+  fs.writeFileSync(`./outputs/indihomhom`, '|id|username|tweet|\n');
+
+  res.statuses.forEach(async status => {
     console.log('==============================');
     console.log(status.id);
     console.log(`${status.user.name}: ${status.text}`);
     console.log('==============================');
+    await fs.appendFile(
+      './outputs/indihomhom', 
+      `|${status.id}|${status.user.name}|${status.text}|\n`, 
+      (err) => {
+        if (err) throw err;
+      }
+    );
   });
 }
-
-const questioner = (settings) => {
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-  });
-  
-  rl.question('Get most recent tweets?', (ans) => {
-    console.log(ans);
-    settings.recent = ans == 'y' || ans == 'Y' || ans == '';
-  });
-  
-  rl.question('Output file name: ', (ans) => {
-    console.log(ans);
-    settings.outputFileName = ans;
-  });
-  
-}
-
-
 
 module.exports = {
   logger,
-  questioner
 }
